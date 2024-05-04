@@ -1,0 +1,16 @@
+{% extends "supervisorOPOP/base.html" %}
+
+{% block title %}Отчеты по группам{% endblock %}
+
+{% block content %}
+<div class="container-sm custom-container mt-5">
+    <p>Группа: {{ report.group }}</p>
+    <p>Название практики: {{ report.practic }}</p>
+    <form action="{% url 'ready-report-group-detail' pk=report.pk %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Скачать отчет</button>
+    </form>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,237 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="{% static "user/img/logo-separator.svg" %}">
+    <style>
+        .main-content {
+            min-height: calc(71vh);
+        }
+        .custom-container {
+            max-width: 800px; /* Здесь можно указать желаемую ширину */
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <header class="border-bottom lh-1 p-1">
+                <div class="row flex-nowrap justify-content-between align-items-center">
+                    <div class="col-4 pt-1 d-flex">
+                        <a href="" class="d-inline-flex text-decoration-none">
+                            <svg class="bi" width="40" height="32" role="img" aria-label="Витрина проектов ЮГУ">
+                                <img class="img-fluid" src="{% static "user/img/logo-separator.svg" %}" id="logo">
+                            </svg>
+                            <p class="mb-0 fw-bold text-dark" style="margin-left: 5%;">ГЕНЕРАЦИЯ<br>ОТЧЕТОВ<br>ЮГУ</p>
+                        </a>
+                    </div>
+
+                    <div class="col-4 pt-1 d-flex justify-content-end align-items-center">
+                        <div class="p-1">
+                            {% if user.is_authenticated %}
+                            <div class="dropdown">
+                                <div class="dropdown-toggle nav-item nav-link text-body-emphasis" id="dropdownMenuUser"
+                                    data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+                                <i class="bi bi-chevron-left me-2"></i>
+                                    {{ user.username }}
+                                </div>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuUser">
+                                        {% if user.supervisoropop %}
+                                            <a class="dropdown-item" href="{% url 'practice-list'%}">Практики</a>  
+                                            <a class="dropdown-item" href="{% url 'practice-new'%}">Создать новую практику</a>
+                                            <a class="dropdown-item" href="{% url 'ready-report-group-list'%}">Скачать отчеты по группам</a>                                 
+                                        {% endif %}
+                                        {% if user.student %}
+                                            <a class="dropdown-item" href="{% url 'student-practice-list'%}">Мои практики</a>     
+                                        {% endif %}
+                                        {% if user.supervisorpractice %}
+                                            <a class="dropdown-item" href="{% url 'supervisor-practice-practice-student-list'%}">Отчеты студентов</a>
+                                            <a class="dropdown-item" href="{% url 'report-group-list' %}">Отчеты по группам</a>
+                                        {% endif %}
+                                        <hr class="dropdown-divider">
+                                        <form method="post" action="{% url 'logout' %}">
+                                            {% csrf_token %}
+                                            <button class="dropdown-item" type="submit">Выход</button>
+                                        </form>
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+        
+        
+        <div class="container mt-4 content">
+            <main role="main" class="main-content">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+        <div class="container">
+            <footer class="d-flex flex-wrap justify-content-between align-items-center py-1 border-top">
+                <div class="col-md-4 mb-md-0 text-body-secondary">
+                    г. Ханты-Мансийск, ул. Чехова, 16<br>
+                    Канцелярия: тел.:
+                    +7 (3467) 377-000<br>
+                    e-mail:
+                    ugrasu@ugrasu.ru<br>
+                </div>
+                <a href="" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                    <svg class="bi">
+                        <img class="img-fluid" src="{% static "user/img/logo.svg" %}" id="logo">
+                    </svg>
+                </a>
+                <div class="mb-md-0 nav col-md-4 justify-content-end">
+                    <p>© ФГБОУ ВО ЮГУ 2001–2024</p>
+                </div>
+                
+            </footer>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    document.getElementById("cancel-btn").addEventListener("click", function() {
+        window.history.back(); // Переход на предыдущую страницу
+    });
+</script>
+
+
+
+<script>
+    function switchPage(page) {
+        var currentParams = getCurrentParamsWithoutPage();
+        var url = window.location.pathname + "?page=" + page;
+
+        if (currentParams !== "") {
+            url += "&" + currentParams;
+        }
+
+        window.location.href = url;
+    }
+
+    // Функция для создания кнопок пагинации
+    function createPaginationButtons(currentPage, totalPages) {
+        if (totalPages === 1){
+            return;
+        }
+        var paginationContainer = document.getElementById("pagination-buttons-container");
+        paginationContainer.innerHTML = "";
+        
+        //кнопка "Назад"
+
+        var backButton = document.createElement("button");
+        backButton.innerHTML = "Назад";
+        backButton.className = "btn btn-outline-info mb-4 mr-1 pagination-button";
+        backButton.onclick = function() {
+            switchPage(currentPage - 1);
+        };
+        if (currentPage === 1) {
+            backButton.disabled = true;
+        }
+        paginationContainer.appendChild(backButton);
+
+        if (currentPage > 2) {
+            var firstPageButton = document.createElement("button");
+            firstPageButton.innerHTML = 1;
+            firstPageButton.className = "btn btn-outline-info mb-4 mr-1 pagination-button";
+            firstPageButton.onclick = function() {
+                switchPage(1);
+            };
+            paginationContainer.appendChild(firstPageButton);
+
+            if (currentPage > 3) {
+                var dotsBeforeFirstPage = document.createElement("span");
+                dotsBeforeFirstPage.innerHTML = "...";
+                dotsBeforeFirstPage.className = "btn btn-outline-info mb-4 mr-1 pagination-button disabled";
+                paginationContainer.appendChild(dotsBeforeFirstPage);
+            }
+        }
+
+        for (var i = currentPage - 1; i <= currentPage + 1; i++) {
+            if (i >= 1 && i <= totalPages) {
+                var pageButton = document.createElement("button");
+                pageButton.innerHTML = i;
+                pageButton.className = "btn btn-outline-info mb-4 mr-1 pagination-button";
+                pageButton.onclick = function() {
+                    switchPage(parseInt(this.innerHTML));
+                };
+                if (i === currentPage) {
+                    pageButton.disabled = true;
+                }
+                paginationContainer.appendChild(pageButton);
+            }
+        }
+
+        
+
+        if (currentPage < totalPages - 1) {
+            if (currentPage < totalPages - 2){
+                var dotsAfterLastPage = document.createElement("span");
+                dotsAfterLastPage.innerHTML = "...";
+                dotsAfterLastPage.className = "btn btn-outline-info mb-4 mr-1 pagination-button disabled";
+                paginationContainer.appendChild(dotsAfterLastPage);
+            }
+            var lastPageButton = document.createElement("button");
+            lastPageButton.innerHTML = totalPages;
+            lastPageButton.className = "btn btn-outline-info mb-4 mr-1 pagination-button";
+            lastPageButton.onclick = function() {
+                switchPage(totalPages);
+            };
+            paginationContainer.appendChild(lastPageButton);
+        }
+
+        var forwardButton = document.createElement("button");
+        forwardButton.innerHTML = "Вперед";
+        forwardButton.className = "btn btn-outline-info mb-4 mr-1 pagination-button";
+        forwardButton.onclick = function() {
+            switchPage(currentPage + 1);
+        };
+        if (currentPage === totalPages) {
+            forwardButton.disabled = true;
+        }
+        paginationContainer.appendChild(forwardButton);
+    }
+
+    function getCurrentParamsWithoutPage() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var filteredParams = new URLSearchParams();
+
+        for (const [key, value] of urlParams.entries()) {
+            if (key !== 'page') {
+                filteredParams.append(key, value);
+            }
+        }
+
+        return filteredParams.toString();
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var currentPage = {{ page_obj.number }};
+        var totalPages = {{ paginator.num_pages }}; 
+
+        createPaginationButtons(currentPage, totalPages);
+    });
+
+    function clearFilters() {
+        window.location.href = window.location.origin + window.location.pathname;
+    }
+</script>
+
+{% block script %}{% endblock %}
+
+</html>

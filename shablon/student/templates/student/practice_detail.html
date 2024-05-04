@@ -1,0 +1,34 @@
+{% extends "student/base.html" %}
+
+{% block title %}{{ practice.title }}{% endblock %}
+
+{% block content %}
+
+{% include "supervisorOPOP/practice_detail_card.html" %}
+
+{% include "student/practice_student_detail_card.html" %}
+
+{% if not practice_student.ratingpracticestudent %}
+    <form method="post" enctype="multipart/form-data" class="mt-3" action="{% url 'student-practice-student-parse-file' practice_id=practice.id %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="csvFile" class="form-label">Загрузить CSV файл. Внимание! При загрузке нового файла страрые данные будут удалены!</label>
+            <input type="file"  class="form-control" type="file" id="csvFile" name="csv_file" accept=".csv">
+        </div>
+        <button type="submit" class="btn btn-primary mt-3 mb-3">Отправить</button>
+    </form>
+{% endif %}
+
+{% include "supervisorPractice/practice_student_detail_card.html" %}
+<div class="text-center mb-3">
+
+
+{% if practice_student.ratingpracticestudent %}
+    <form action="{% url 'student-practice-detail' practice.id %}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-success " type="submit">Скачать отчет</button>
+    </form>
+{% endif %}
+</div>
+
+{% endblock content %}

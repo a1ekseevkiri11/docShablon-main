@@ -1,0 +1,12 @@
+{% extends "supervisorOPOP/base.html" %}
+
+{% block title %}Новая практика{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <form id="form" method="post" action="{% url 'practice-update' practice.id %}">
+        {% csrf_token %}
+        {% include "supervisorOPOP/practice_form.html" %}
+    </form>
+</div>
+{% endblock content %}

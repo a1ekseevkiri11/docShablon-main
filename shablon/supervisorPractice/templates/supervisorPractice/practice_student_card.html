@@ -1,0 +1,14 @@
+<div class="col">
+    <div class="card h-100">
+        <div class="card-body">
+            <h5 class="card-title">{{ practice.student.get_fio }}</h5>
+            <p class="card-title">Отчет по практике: {{ practice.practice.title }}</p>
+            {% if practice.ratingpracticestudent %}
+                <p class="text-muted">Оценен</p>
+            {% else %}
+                <p class="text-muted darc">Не оценен</p>
+            {% endif %}
+            <a href="{% url 'supervisor-practice-practice-student-detail' pk=practice.id%}" class="btn btn-primary mt-2">Подробнее</a>
+        </div>
+    </div>
+</div>

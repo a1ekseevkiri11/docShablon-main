@@ -1,0 +1,24 @@
+{% extends "supervisorPractice/base.html" %}
+
+{% block title %}Отчеты по группам{% endblock %}
+
+{% block content %}
+<div class="container-sm custom-container mt-5">
+    <strong>Внимание! Отправляя эту форму вы запрещаете прикреплять отчеты для студентов на этой практике,
+        перед отправлением, посмотрите не остались ли не проверенные отчеты.
+    </strong>
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        <p class="mt-5">Предложения и рекомендации об улучшении организации практик: 
+            <br>
+            {{ form.title }}
+        </p>
+        <div class="button-container mb-5 text-center">
+            <button type="submit" class="btn btn-success">Отправить</button>
+            <button type="button" class="btn btn-secondary" id="cancel-btn">Отмена</button>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

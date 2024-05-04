@@ -1,0 +1,49 @@
+{% extends "user/base.html" %}
+
+{% block script %}
+
+<!-- Всплывающее окно -->
+<div class="modal fade" id="popup_form" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{% block form_title %}{% endblock %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            {% block form %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#id_direction_of_training').change(function() {
+            var directionId = $(this).val();  // Получаем выбранный id направления обучения
+            $.ajax({
+                url: '{% url "get-groups" %}',    // URL-адрес обработчика AJAX-запроса
+                data: {'direction_id': directionId},  // Передаем выбранный id направления обучения
+                dataType: 'json',
+                success: function(data) {
+                    var groupField = $('#id_group');
+                    groupField.empty();  // Очищаем список групп
+                    $.each(data.groups, function(index, group) {
+                        // Добавляем чекбокс для каждой группы
+                        groupField.append('<input type="checkbox" name="group" value="' + group.id + '">' + group.title + '<br>');
+                    });
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    console.error('Произошла ошибка при загрузке групп:', errorThrown);
+                }
+            });
+        });
+    });
+</script>
+
+
+
+<script>
+    function clearFilters() {
+        window.location.href = window.location.origin + window.location.pathname;
+    }
+</script>
+{% endblock %}

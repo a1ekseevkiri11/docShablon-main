@@ -1,0 +1,30 @@
+{% extends "supervisorPractice/base.html" %}
+
+{% block title %}Отчеты по группам{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="order-md-2">
+            <div class="row row-cols-1 row-cols-md-2 g-3">
+                {% if practices %}
+                    {% for practice in practices %}
+                        {% for group in practice.group.all %}
+                            {% include "supervisorPractice/report_group_card.html" %}
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <div class="col">
+                        <h2>Отчетов по группе нет!</h2>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="pagination justify-content-center mt-4">
+                <div id="pagination-buttons-container">
+                    <!-- Кнопки пагинации будут отображены здесь -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

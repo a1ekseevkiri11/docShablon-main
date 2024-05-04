@@ -1,0 +1,33 @@
+<div class="container-sm custom-container mt-5">
+    <h3 class="text-center">{{ practice.title }}</h3>
+    <p class="mt-4">Группы: {% for group in practice.group.all %}
+        {{ group.title }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+    </p>
+    <p>Тип практики: {{ practice.get_type_display }}</p>
+    <p>Вид практики: {{ practice.get_kind_display }}</p>
+    <p>Дата начала: {{ practice.date_start }}</p>
+    <p>Дата окончания: {{ practice.date_end }}</p>
+    <h5 class="text-start mt-5">Документ</h5>
+    <p class="mt-4">Номер: {{ practice.number_decree }}</p>
+    <p>Дата подписания: {{ practice.date_decree }}</p>
+    <h5 class="text-start mt-5">Место проведения практики</h5>
+    <p class="mt-4">Название: {{ practice.title_place }}</p>
+    <p>Адрес: {{ practice.adress_place}}</p>
+    <h5 class="text-start mt-5">Руководитель от ЮГУ</h5>
+    <p class="text-start mt-4">{{ practice.post_supervisor_YuSU }} {{ practice.fio_supervisor_YuSU }}</p>
+    
+    {% if practice.post_supervisor_company %}
+        <h5 class="text-start mt-5">Руководитель от организации</h5>
+        <p class="text-start mt-4">{{ practice.post_supervisor_company }} {{ practice.fio_supervisor_company }}</p>
+    {% endif %}
+    
+    <h5 class="text-start mt-5">Руководитель практики от организации</h5>
+    <p class="text-start mt-4">{{ practice.supervisor_practice.post }} {{ practice.supervisor_practice.get_fio }}</p>   
+    {% if user.supervisoropop %}
+    <div class="button-container mb-5 text-center">
+        <a class="btn btn-success" href="{% url 'practice-update' practice.id %}">Редактировать</a>
+        <a class="btn btn-danger" href="{% url 'practice-delete' practice.id %}">Удалить</a>
+    </div>
+    {% endif %}
+</div>

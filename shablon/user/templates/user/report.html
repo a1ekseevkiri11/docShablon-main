@@ -1,0 +1,10 @@
+{% extends "user/base.html" %}
+
+{% block title %}Отчеты{% endblock %}
+
+{% block content %}
+<form action="{% url 'report' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Generate Report</button>
+</form>
+{% endblock content %}

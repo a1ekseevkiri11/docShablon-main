@@ -1,0 +1,9 @@
+<div class="col">
+    <div class="card h-100">
+        <div class="card-body">
+            <h5 class="card-title">{{ practice }}</h5>
+            <h5 class="card-title">{{ group  }}</h5>
+            <a href="{% url 'report-group-create' practice_id=practice.pk group_id=group.pk %}" class="btn btn-info">Заполнить</a>
+        </div>
+    </div>
+</div>

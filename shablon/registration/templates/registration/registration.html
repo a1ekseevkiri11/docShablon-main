@@ -1,0 +1,96 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="icon" type="image/svg+xml" href="{% static "registration/img/logo-separator.svg" %}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .content-section {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-top: 50px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+        .form-control {
+            border-radius: 10px;
+        }
+
+        .form-group legend {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="content-section justify-content-center">
+                    <div class="row justify-content-center align-items-center mb-4">
+                        <img src="{% static "registration/img/logo-separator.svg" %}" id="logo" class="mr-3" style="width: 50px; height: auto;">
+                        <h3 class="mb-0 fw-bolder">ГЕНЕРАЦИЯ<br>ОТЧЕТОВ<br>ЮГУ</h3>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <strong>
+                            Регистрация для пользователя {{ group_name}}
+                        </strong>
+                    </div>
+                    <br>
+                    <form method="post" class="mx-auto" style="max-width: 400px;">
+                        {% csrf_token %}
+                        <p>Логин {{form.username}}</p>
+                        <p>Фамилия {{form.last_name}}</p>
+                        <p>Имя {{form.first_name}}</p>
+                        <p>Отчетсво {{form.patronymic}}</p>
+                        {% if form.group %}
+                            <p>Группа {{form.group}}</p>
+                        {% endif %}
+                        {% if form.post %}
+                            <p>Пост {{form.post}}</p>
+                        {% endif %}
+                        <p>Пароль {{form.password1}}</p>
+                        <p>Повторите пароль {{form.password2}}</p>
+                        
+                        <button class="form-control btn-primary btn-block" type="submit">Зарегистрироваться</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+        integrity="sha384-XpZl3v8wzPnvWnHdiTyOKc7Nw5X4DYxIS8f4CY3l23O6mfxCxZtTXsF7em8vgFME"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shCk+pcyVbddfeN6Iu7EBJXOrl/qr7Jqjl2gi"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

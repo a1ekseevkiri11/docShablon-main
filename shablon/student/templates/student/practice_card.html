@@ -1,0 +1,11 @@
+<div class="col">
+    <div class="card h-100">
+        <div class="card-body">
+            <h5 class="card-title"> {{ practice.title }}</h5>
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">{{ practice.date_start }} - {{ practice.date_end }}</small>
+            </div>
+            <a href="{% url 'student-practice-detail' practice.id %}" class="btn btn-primary mt-2">Подробнее</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+{% extends "supervisorPractice/base.html" %}
+
+{% block title %}Оценить{% endblock %}
+
+{% block content %}
+<div class="container-sm custom-container mt-5">
+    <form method="post">
+        {% csrf_token %}
+        <h3 class="text-center mt-4">Подробности договора</h3>
+        <p>Тип: {{ form.type }}</p>
+        <p>Оплачиваемая   {{ form.pay }}</p>
+        <hr class="mt-5">
+        <h3 class="text-center mt-4">Оценка</h3>
+        <p class="mt-4">Производственные задачи (список):
+            <br>
+            {{ form.production_tasks }}
+        </p>
+        <p>В ходе выполнения практики продемонстрировал(-а) следующие качества: 
+            <br>
+            {{ form.quality }}
+        </p>
+        <p>С возникающими при работе проблемами справлялся: 
+            <br>
+            {{ form.hard_quality }}
+        </p>
+        <p>Индивидуальное задание, предусмотренное программой практики, выполнено  
+            {{ form.amount }}
+        </p>
+
+        <p>Замечения:
+            <br>
+            {{ form.remark }}
+        </p>
+
+        <p>Оценка:
+            <br>
+            {{ form.rating }}
+        </p>
+        
+        <div class="button-container mb-5 text-center">
+            <button type="submit" class="btn btn-success">Отправить</button>
+            <button type="button" class="btn btn-secondary" id="cancel-btn">Отмена</button>
+        </div>
+        
+    </form>
+</div>
+
+{% endblock content %}
+
+

@@ -1,0 +1,28 @@
+{% extends "supervisorOPOP/base.html" %}
+
+{% block title %}Отчеты по группам{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="order-md-2">
+            <div class="row row-cols-1 row-cols-md-2 g-3">
+                {% if reports %}
+                    {% for report in reports %}
+                        {% include "supervisorOPOP/report_group_card.html" %}
+                    {% endfor %}
+                {% else %}
+                    <div class="col">
+                        <h2>Отчетов нет!</h2>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="pagination justify-content-center mt-4">
+                <div id="pagination-buttons-container">
+                    <!-- Кнопки пагинации будут отображены здесь -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

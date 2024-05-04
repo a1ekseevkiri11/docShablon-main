@@ -1,0 +1,16 @@
+<div class="container-sm custom-container mt-5">
+    {% if practice_student.ratingpracticestudent %}
+        <hr class="mt-5">
+        <h3 class="text-center mt-4">Подробности договора</h3>
+        <p class="mt-4">Тип: {{ practice_student.ratingpracticestudent.get_type_display }}</p>
+        <p>Оплачиваемая: {{ practice_student.ratingpracticestudent.pay|yesno:"да,нет" }}</p>
+        <hr class="mt-5">
+        <h3 class="text-center mt-4">Оценка</h3>
+        <p class="mt-4">Производственные задачи: {{ practice_student.ratingpracticestudent.production_tasks }}</p>
+        <p>В ходе выполнения практики продемонстрировал(-а) следующие качества: {{ practice_student.ratingpracticestudent.quality }}</p>
+        <p>С возникающими при работе проблемами справлялся: {{ practice_student.ratingpracticestudent.hard_quality }}</p>
+        <p>Индивидуальное задание, предусмотренное программой практики, выполнено {{ practice_student.ratingpracticestudent.amount }}</p>
+        <p>Замечения: {{ practice_student.ratingpracticestudent.remark }}</p>
+        <p>Оценка: «{{ practice_student.ratingpracticestudent.rating }}»</p>
+    {% endif %}
+</div>

@@ -1,0 +1,13 @@
+<div class="container-sm custom-container mt-5">
+{% if practice_student %}
+    <hr>
+    <h3 class="text-center mt-4">Отчет</h3>
+    <p>Студент: {{ practice_student.student.get_fio }}</p>
+    <p>Дневник практики:</p>
+    <ul>
+        {% for task in practice_student.studentproductiontasks_set.all %}
+            <li>{{ task.data }} - {{ task.title }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+</div>
